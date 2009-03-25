@@ -156,7 +156,7 @@ struct nameTable {
 
 #pragma pack()
 
-static void appendBigEndianStringToEOTHeader(vector<uint8_t> eotHeader, const BigEndianUShort* string, unsigned short length)
+static void appendBigEndianStringToEOTHeader(vector<uint8_t>&eotHeader, const BigEndianUShort* string, unsigned short length)
 {
     size_t size = eotHeader.size();
     eotHeader.resize(size + length + 2 * sizeof(unsigned short));
@@ -318,6 +318,7 @@ bool getEOTHeader(unsigned char* fontData, size_t fontSize, vector<uint8_t>& eot
     eotHeader.push_back(padding);
     eotHeader.push_back(padding);
 
+    prefix = reinterpret_cast<EOTPrefix*>(eotHeader.data());
     prefix->eotSize = eotHeader.size() + fontSize;
 
     return true;
