@@ -25,11 +25,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
+#include <stdint.h>
 #include <vector>
 
 #include "OpenTypeUtilities.h"
 
 using std::vector;
+
 typedef unsigned Fixed;
 
 #define DEFAULT_CHARSET 1
@@ -160,7 +162,7 @@ static void appendBigEndianStringToEOTHeader(vector<uint8_t>&eotHeader, const Bi
 {
     size_t size = eotHeader.size();
     eotHeader.resize(size + length + 2 * sizeof(unsigned short));
-    unsigned short* dst = reinterpret_cast<unsigned short*>(eotHeader.data() + size);
+    unsigned short* dst = reinterpret_cast<unsigned short*>(&eotHeader[0] + size);
     unsigned i = 0;
     dst[i++] = length;
     unsigned numCharacters = length / 2;
@@ -179,7 +181,7 @@ bool getEOTHeader(unsigned char* fontData, size_t fontSize, vector<uint8_t>& eot
     const char* data = (const char *) fontData;
 
     eotHeader.resize(sizeof(EOTPrefix));
-    EOTPrefix* prefix = reinterpret_cast<EOTPrefix*>(eotHeader.data());
+    EOTPrefix* prefix = reinterpret_cast<EOTPrefix*>(&eotHeader[0]);
 
     prefix->fontDataSize = dataLength;
     prefix->version = 0x00020001;
@@ -318,7 +320,7 @@ bool getEOTHeader(unsigned char* fontData, size_t fontSize, vector<uint8_t>& eot
     eotHeader.push_back(padding);
     eotHeader.push_back(padding);
 
-    prefix = reinterpret_cast<EOTPrefix*>(eotHeader.data());
+    prefix = reinterpret_cast<EOTPrefix*>(&eotHeader[0]);
     prefix->eotSize = eotHeader.size() + fontSize;
 
     return true;

@@ -1,15 +1,20 @@
-Very quick commandline wrapper around OpenTypeUtilities.cpp from Chromium, used to
-make EOT (Embeddable Open Type) files from TTF (TrueType/OpenType Font) files.
-For some reason this is the only file format TTLoadEmbeddedFont() accepts,
-which is the what Internet Explorer uses for css @font-face declarations.
+Very quick commandline wrapper around OpenTypeUtilities.cpp from Chromium, used
+to make EOT (Embeddable Open Type) files from TTF (TrueType/OpenType Font)
+files. This is the format TTLoadEmbeddedFont() accepts, which is what Internet
+Explorer uses for css @font-face declarations.
 
 I've only tested this on Linux.
 
-EOT: http://www.w3.org/Submission/2008/SUBM-EOT-20080305/
+EOT was documented by Microsoft here:
+    <http://www.w3.org/Submission/2008/SUBM-EOT-20080305/>
 
-Chromium: http://src.chromium.org/viewvc/chrome/trunk/deps/third_party/WebKit/WebCore/platform/graphics/win/OpenTypeUtilities.cpp?view=log&pathrev=7591
+TTLoadEmbeddedFont is described here:
+    <http://msdn.microsoft.com/en-us/library/dd145155(VS.85).aspx>
 
-Build:
+Chromium:
+    <http://src.chromium.org/viewvc/chrome/trunk/deps/third_party/WebKit/WebCore/platform/graphics/win/OpenTypeUtilities.cpp?view=log&pathrev=7591>
+
+To build:
 
     $ make
 
