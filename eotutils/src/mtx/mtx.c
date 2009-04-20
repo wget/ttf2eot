@@ -20,8 +20,8 @@ static uint32_t mtx_ntoh24(uint32_t v)
 
 bool mtx_init(mtx_t **state, const uint8_t *data, size_t size)
 {
-    const size_t kOffsetSize = 3; // You can't sizeof(bitfield)
-    const size_t kDataOffOffset = 4; // Same with offsetof()
+    const size_t kOffsetSize = 3;       // You can't sizeof(bitfield) :-(
+    const size_t kDataOffOffset = 4;    // Same with offsetof()
     const size_t kCodeOffOffset = 7;
     mtx_t *mtx;
 
@@ -46,14 +46,11 @@ bool mtx_init(mtx_t **state, const uint8_t *data, size_t size)
     if (mtx->head.codeoffset > size)
         return false;
     
-    mtx->restsize = mtx->head.dataoffset - 
-        (kDataOffOffset + kOffsetSize);
+    mtx->restsize = mtx->head.dataoffset - (kDataOffOffset + kOffsetSize + kOffsetSize);
 
-    mtx->datasize = mtx->head.codeoffset - 
-        ((kCodeOffOffset + kOffsetSize) + mtx->restsize);
+    mtx->datasize = mtx->head.codeoffset - ((kCodeOffOffset + kOffsetSize) + mtx->restsize);
 
-    mtx->codesize = size - 
-        (sizeof(mtx_header_t) + mtx->restsize + mtx->datasize);
+    mtx->codesize = size - (sizeof(mtx_header_t) + mtx->restsize + mtx->datasize);
 
     assert(size == sizeof(mtx_header_t) 
             + mtx->restsize 
@@ -66,15 +63,14 @@ bool mtx_init(mtx_t **state, const uint8_t *data, size_t size)
 
     memcpy(mtx->rest, data + sizeof(mtx->head), mtx->restsize);
     memcpy(mtx->data, data + sizeof(mtx->head) + mtx->restsize, mtx->datasize);
+
     memcpy(mtx->code,
            data + sizeof(mtx->head) + mtx->restsize + mtx->datasize,
            mtx->codesize);
 
     mtx->totalsize = size;
 
-    *state = mtx;
-
-    return true;
+    return !! (*state = mtx);
 }
 
 bool mtx_dump(mtx_t *mtx)

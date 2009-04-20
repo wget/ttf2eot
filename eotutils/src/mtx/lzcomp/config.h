@@ -5,4 +5,4 @@
 //#define __cplusplus     /* for C++ applications */
 //#define _WINDOWS        /* for Windows applications */
 #define VERBOSE         /* for standard printf printout */
-
+#define __huge

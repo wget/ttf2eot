@@ -10,6 +10,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "config.h"
 #include "bitio.h"
 #include "ahuff.h"
 #include "mtxmem.h"
