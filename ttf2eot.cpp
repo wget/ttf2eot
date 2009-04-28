@@ -4,10 +4,15 @@
 #include <stdio.h>
 #include <assert.h>
 #include <limits.h>
-#include <stdint.h>
 #include <string.h>
 
 #include <vector>
+
+#ifndef _MSC_VER
+# include <stdint.h>
+#else
+typedef unsigned char uint8_t;
+#endif
 
 #include "OpenTypeUtilities.h"
 
@@ -30,9 +35,14 @@ int main(int argc, char **argv)
     unsigned char *fontData;
 
     if (argv[1] == NULL || (argv[1][0] == '-' && argv[1][1] == '\0')) {
+#ifndef _MSC_VER
         input = stdin;
+#else
+        fprintf(stderr, "usage: %s input.ttf > output.eot\n", argv[0]);
+        return 1;
+#endif
     } else {
-        input = fopen(argv[1], "r");
+        input = fopen(argv[1], "rb");
         if (input == NULL) {
             fprintf(stderr, "could not open input file %s, %m\n", argv[1]);
             return 1;

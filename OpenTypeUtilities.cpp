@@ -25,11 +25,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#include <stdint.h>
 #include <string.h>
 #include <vector>
 
+#ifndef _MSC_VER
+# include <stdint.h>
+#else
+typedef unsigned char uint8_t;
+#endif
+
 #include "OpenTypeUtilities.h"
+
 
 using std::vector;
 

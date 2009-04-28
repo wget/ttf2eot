@@ -1,2 +1,4 @@
 - 0.0.2-1
     - Fix implicit declaration of memcmp, required on ubuntu - Thanks adamplumb
+    - Quick modification to make msvc compilation work - Thanks deepikakorapati
+
