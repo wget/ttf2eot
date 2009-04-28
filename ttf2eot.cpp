@@ -11,6 +11,7 @@
 #ifndef _MSC_VER
 # include <stdint.h>
 #else
+# include <io.h> // for _O_BINARY
 typedef unsigned char uint8_t;
 #endif
 
