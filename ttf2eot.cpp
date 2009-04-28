@@ -34,13 +34,14 @@ int main(int argc, char **argv)
     FILE *input;
     unsigned char *fontData;
 
-    if (argv[1] == NULL || (argv[1][0] == '-' && argv[1][1] == '\0')) {
-#ifndef _MSC_VER
-        input = stdin;
-#else
-        fprintf(stderr, "usage: %s input.ttf > output.eot\n", argv[0]);
-        return 1;
+#ifdef _MSC_VER
+    setmode(_fileno(stdin), _O_BINARY);
+    setmode(_fileno(stdout), _O_BINARY);
+    setmode(_fileno(stderr), _O_TEXT);
 #endif
+
+    if (argv[1] == NULL || (argv[1][0] == '-' && argv[1][1] == '\0')) {
+        input = stdin;
     } else {
         input = fopen(argv[1], "rb");
         if (input == NULL) {
