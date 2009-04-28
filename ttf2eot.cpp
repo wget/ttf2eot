@@ -11,7 +11,9 @@
 #ifndef _MSC_VER
 # include <stdint.h>
 #else
-# include <io.h> // for _O_BINARY
+// setmode() headers
+# include <io.h>
+# include <fcntl.h> 
 typedef unsigned char uint8_t;
 #endif
 
