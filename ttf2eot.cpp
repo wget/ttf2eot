@@ -11,7 +11,10 @@
 #ifndef _MSC_VER
 # include <stdint.h>
 #else
-// setmode() headers
+typedef unsigned char uint8_t;
+#endif
+
+#if defined(_MSC_VER) || defined(__MINGW32__)
 # include <io.h>
 # include <fcntl.h> 
 # ifndef _O_BINARY
@@ -20,8 +23,6 @@
 # ifndef _O_TEXT
 #  define _O_TEXT 0x4000
 # endif
-
-typedef unsigned char uint8_t;
 #endif
 
 #include "OpenTypeUtilities.h"
@@ -44,7 +45,7 @@ int main(int argc, char **argv)
     FILE *input;
     unsigned char *fontData;
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__MINGW32__)
     setmode(_fileno(stdin), _O_BINARY);
     setmode(_fileno(stdout), _O_BINARY);
     setmode(_fileno(stderr), _O_TEXT);
