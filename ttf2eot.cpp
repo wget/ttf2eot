@@ -40,9 +40,9 @@ int main(int argc, char **argv)
     size_t overlayDst = 0;
     size_t overlaySrc = 0;
     size_t overlayLength = 0;
-    size_t fontSize = 0;
+    size_t fontSize = kFontInitSize;
     size_t fontOff = 0;
-    FILE *input;
+    FILE *input, *output;
     unsigned char *fontData;
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
@@ -61,7 +61,17 @@ int main(int argc, char **argv)
         }
     }
 
-    if ((fontData = (unsigned char *) malloc(fontSize = kFontInitSize)) == NULL) {
+    if (argv[1] == NULL || argv[2] == NULL || (argv[2][0] == '-' && argv[2][1] == '\0')) {
+    	output = stdout;
+    } else {
+    	output = fopen(argv[2], "wb");
+    	if (output == NULL) {
+    		fprintf(stderr, "could not open output file %s, %m\n", argv[2]);
+    		return 1;
+        }
+    }
+
+    if ((fontData = (unsigned char *) malloc(fontSize)) == NULL) {
         fprintf(stderr, "Allocation failure, %m\n");
         return 1;
     }
