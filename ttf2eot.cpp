@@ -94,8 +94,8 @@ int main(int argc, char **argv)
     } while (true);
 
     if (getEOTHeader(fontData, fontSize, eotHeader, overlayDst, overlaySrc, overlayLength)) {
-        fwrite(&eotHeader[0], eotHeader.size(), 1, stdout);
-        fwrite(fontData, fontSize, 1, stdout);
+        fwrite(&eotHeader[0], eotHeader.size(), 1, output);
+        fwrite(fontData, fontSize, 1, output);
         return 0;
     } else {
         fprintf(stderr, "unknown error parsing input font, %m\n");
