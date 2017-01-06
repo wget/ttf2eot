@@ -28,6 +28,8 @@
 #ifndef OpenTypeUtilities_h
 #define OpenTypeUtilities_h
 
+#include <cstddef>
+
 using std::vector;
 
 bool getEOTHeader(unsigned char * fontData, size_t fontSize, vector<uint8_t>& eotHeader, size_t& overlayDst, size_t& overlaySrc, size_t& overlayLength);
